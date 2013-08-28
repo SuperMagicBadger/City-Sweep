@@ -18,18 +18,6 @@
     return self;
 }
 
-+ (DataManager*) sharedManager{
-    static DataManager* singleton;
-    
-    @synchronized(self){
-        if(singleton == nil){
-            singleton = [[DataManager alloc] init];
-        }
-    }
-    
-    return singleton;
-}
-
 //network controls---------------------------
 - (BOOL) connect{
     //establish connection
@@ -56,7 +44,7 @@
 - (BOOL) disconnect{
     @try{
         [reader close];
-        [writer open];
+        [writer close];
     }
     @catch (NSException *e) {
         NSLog(@"%@", [e reason]);
@@ -65,20 +53,35 @@
     self.connected = NO;
     return YES;
 }
-- (void) doSend:(Data *)d{
+- (BOOL) doSend:(Data *)d{
     if(self.connected){
         NSString *message = [[NSString alloc] initWithFormat:@"%@", [d toString]];
         NSLog(@"sending data: %@", message);
         NSData *data = [[NSData alloc] initWithData:[message dataUsingEncoding:NSASCIIStringEncoding]];
-        [writer write:[data bytes] maxLength:[data length]];
+        int dataSent = [writer write:[data bytes] maxLength:[data length]];
+        return dataSent > 0;
     }
+    return NO;
+}
+- (BOOL) sendNextReport{
+    if(self.connected) {
+        Data* d = [reportQueue objectAtIndex:0];
+        if(d != nil){
+            if([self doSend:d]){
+                [reportQueue removeObject:0];
+                NSLog(@"data sent");
+                return YES;
+            }
+        }
+    }
+    return NO;
 }
 //network controls===========================
 
 //report controls----------------------------
 - (void) sendRepport:(Data *)d{
     NSLog(@"dm here... got da report");
-    [self doSend:d];
+    [reportQueue addObject:d];
     [self pushHistory:d];
 }
 - (void) clearQueue{
@@ -132,7 +135,6 @@
 - (void) readHistory{
     NSLog(@"Reading...");
     //file variables
-    NSFileManager *man = [NSFileManager defaultManager];
     NSString *directory = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
     NSString *fileName = [directory stringByAppendingPathComponent:@"file.plist"];
     

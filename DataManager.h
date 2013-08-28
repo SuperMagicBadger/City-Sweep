@@ -19,26 +19,19 @@
     NSThread *thread;
     
     //something about asynchronous sending
-    NSMutableArray *workQueue;
+    NSMutableArray *reportQueue;
 
     //history storage
     NSMutableArray *historyList;
 }
 
 - (id) init;
-+ (DataManager*) sharedManager;
-
 //network controls
 @property BOOL connected;
 - (BOOL) connect;
 - (BOOL) disconnect;
-- (void) doSend:(Data*)d;
-
-//spin controls
-//- (void) startSpin;
-//- (void) suspendSpin;
-//- (void) stopSpin;
-//- (void) spin;
+- (BOOL) doSend:(Data*)d;
+- (BOOL) sendNextReport;
 
 //report controls
 - (void) sendRepport:(Data*) d;

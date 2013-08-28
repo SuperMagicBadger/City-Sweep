@@ -10,8 +10,6 @@
 
 @implementation Data
 
-static NSKeyedArchiver* archiver = nil;
-
 //initialize--------------------------------------------
 - (id) init{
     self = [super init];

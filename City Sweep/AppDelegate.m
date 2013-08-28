@@ -8,18 +8,24 @@
 
 #import "AppDelegate.h"
 
-@implementation AppDelegate
+@implementation AppDelegate {
+    DataSpinner *spinner;
+    NSOperationQueue *opQueue;
+}
 
 -(id) init {
     self = [super init];
     if(self){
         self.datamanager = [[DataManager alloc] init];
+        opQueue = [NSOperationQueue new];
     }
     return self;
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [self.datamanager connect];
+    spinner = [[DataSpinner alloc] initWithData:self.datamanager];[opQueue addOperation:spinner];
     return YES;
 }
 							

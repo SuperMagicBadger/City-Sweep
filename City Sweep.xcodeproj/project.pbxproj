@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2B13929E17A4E7B800CEE48B /* HistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B13929D17A4E7B800CEE48B /* HistoryViewController.m */; };
+		2B6A1CAB17CD800E00C97B77 /* DataSpinner.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B6A1CAA17CD800E00C97B77 /* DataSpinner.m */; };
 		2B87A7DF17AC961C00E20607 /* HistoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B87A7DE17AC961C00E20607 /* HistoryCell.m */; };
 		2BC8207F17950C5F002E4D4E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BC8207E17950C5F002E4D4E /* UIKit.framework */; };
 		2BC8208117950C5F002E4D4E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BC8208017950C5F002E4D4E /* Foundation.framework */; };
@@ -32,6 +33,8 @@
 /* Begin PBXFileReference section */
 		2B13929C17A4E7B800CEE48B /* HistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryViewController.h; sourceTree = "<group>"; };
 		2B13929D17A4E7B800CEE48B /* HistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryViewController.m; sourceTree = "<group>"; };
+		2B6A1CA917CD800E00C97B77 /* DataSpinner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataSpinner.h; sourceTree = "<group>"; };
+		2B6A1CAA17CD800E00C97B77 /* DataSpinner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataSpinner.m; sourceTree = "<group>"; };
 		2B87A7DD17AC961C00E20607 /* HistoryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryCell.h; sourceTree = "<group>"; };
 		2B87A7DE17AC961C00E20607 /* HistoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryCell.m; sourceTree = "<group>"; };
 		2BC8207B17950C5F002E4D4E /* City Sweep.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "City Sweep.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -181,6 +184,8 @@
 				2BC820D01797708A002E4D4E /* Data.m */,
 				2BC820D21798CCAD002E4D4E /* DataManager.h */,
 				2BC820D31798CCAD002E4D4E /* DataManager.m */,
+				2B6A1CA917CD800E00C97B77 /* DataSpinner.h */,
+				2B6A1CAA17CD800E00C97B77 /* DataSpinner.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -262,6 +267,7 @@
 				2BC820D41798CCAD002E4D4E /* DataManager.m in Sources */,
 				2B13929E17A4E7B800CEE48B /* HistoryViewController.m in Sources */,
 				2B87A7DF17AC961C00E20607 /* HistoryCell.m in Sources */,
+				2B6A1CAB17CD800E00C97B77 /* DataSpinner.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -87,6 +87,14 @@
     }
 }
 
+#pragma mark - Textbox delegate
+- (BOOL) textFieldShouldReturn:(UITextField *)textField{
+    [self displayAlertBoxWithReport:[textField text]];
+    [textField resignFirstResponder];
+    return YES;
+}
+
+#pragma mark - Alert view delegate
 - (void) displayAlertBoxWithReport:(NSString*)reportType{
     //set the title and message
     alertView.title = reportType;
@@ -113,8 +121,6 @@
     NSLog(@"reporting time: %i", self.dm != nil);
     
 }
-
-#pragma mark - Alert view delegate
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     

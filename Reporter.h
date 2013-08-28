@@ -13,7 +13,7 @@
 #import "DataManager.h"
 #import "Data.h"
 
-@interface Reporter : UIViewController <UITableViewDataSource>{
+@interface Reporter : UIViewController <UITableViewDataSource, UITextFieldDelegate>{
     CLLocationManager *locationManager;
     UIAlertView *alertView;
     Data* d;

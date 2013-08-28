@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DataSpinner.h"
 #import "DataManager.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
