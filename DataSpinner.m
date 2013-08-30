@@ -23,7 +23,9 @@
 - (void) main{
     while(!self.isCancelled){
 //        NSLog(@"spin!");
-        [self.dman sendNextReport];
+        if(![self.dman sendNextReport]){
+            [NSThread sleepForTimeInterval:60];
+        }
     }
 }
 

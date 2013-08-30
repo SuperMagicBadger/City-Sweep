@@ -14,6 +14,7 @@
     self = [super init];
     if(self != nil){
         [self readHistory];
+        reportQueue = [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -54,25 +55,16 @@
     return YES;
 }
 - (BOOL) doSend:(Data *)d{
+    if(d == nil){
+        NSLog(@"data is null");
+        return NO;
+    }
     if(self.connected){
         NSString *message = [[NSString alloc] initWithFormat:@"%@", [d toString]];
         NSLog(@"sending data: %@", message);
         NSData *data = [[NSData alloc] initWithData:[message dataUsingEncoding:NSASCIIStringEncoding]];
         int dataSent = [writer write:[data bytes] maxLength:[data length]];
-        return dataSent > 0;
-    }
-    return NO;
-}
-- (BOOL) sendNextReport{
-    if(self.connected) {
-        Data* d = [reportQueue objectAtIndex:0];
-        if(d != nil){
-            if([self doSend:d]){
-                [reportQueue removeObject:0];
-                NSLog(@"data sent");
-                return YES;
-            }
-        }
+        return dataSent != -1;
     }
     return NO;
 }
@@ -80,11 +72,77 @@
 
 //report controls----------------------------
 - (void) sendRepport:(Data *)d{
-    NSLog(@"dm here... got da report");
     [reportQueue addObject:d];
     [self pushHistory:d];
+    NSLog(@"dm here... got da report: %d", reportQueue.count);
 }
-- (void) clearQueue{
+
+- (BOOL) sendNextReport{
+    if(self.connected) {
+        NSLog(@"conneted");
+        if(reportQueue.count > 0){
+            Data* d = [reportQueue objectAtIndex:0];
+            if(d != nil){
+                NSLog(@"sending...");
+                if([self doSend:d]){
+                    [reportQueue removeObjectAtIndex:0];
+                    NSLog(@"data sent");
+                    return YES;
+                } else {
+                    NSLog(@"sending failed...");
+                }
+            } else {
+                NSLog(@"null data");
+            }
+        } else {
+            NSLog(@"no data");
+        }
+    } else {
+        NSLog(@"not connected");
+    }
+    return NO;
+}
+
+- (void) dumpSendQueue{
+    NSLog(@"Writing send queue...");
+    //prepare file variables
+    NSFileManager *man = [NSFileManager defaultManager];
+    NSString *directory = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
+    NSString *fileName = [directory stringByAppendingPathComponent:@"sendQueue.plist"];
+    
+    //check for existence
+    if([man fileExistsAtPath:fileName] == NO){
+        NSLog(@"had to create file");
+        if([man createFileAtPath:fileName contents:nil attributes:nil] == NO){
+            NSLog(@"failed to crete file");
+        }
+    }
+    
+    //set up data array
+    NSMutableArray *array = [[NSMutableArray alloc] initWithCapacity:historyList.count];
+    for(Data* d in reportQueue){
+        [array addObject:d.dictionary];
+    }
+    
+    //write array to disk
+    [array writeToFile:fileName atomically:true];
+}
+
+- (void) readSendQueue{
+    NSLog(@"Reading report queue...");
+    //file variables
+    NSString *directory = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
+    NSString *fileName = [directory stringByAppendingPathComponent:@"sendQueue.plist"];
+    
+    //set up array
+    NSMutableArray *array = [NSMutableArray arrayWithContentsOfFile:fileName];
+    
+    //fill the history
+    reportQueue = [[NSMutableArray alloc] initWithCapacity:array.count];
+    for(NSMutableDictionary * dict in array){
+        [reportQueue addObject:[[Data alloc] initFromDictionary:dict]];
+    }
+    
 }
 //report controls============================
 

@@ -38,11 +38,13 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
     [self.datamanager dumpHistory];
+    [self.datamanager dumpSendQueue];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     [self.datamanager readHistory];
+    [self.datamanager readSendQueue];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application

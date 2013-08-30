@@ -31,11 +31,12 @@
 - (BOOL) connect;
 - (BOOL) disconnect;
 - (BOOL) doSend:(Data*)d;
-- (BOOL) sendNextReport;
 
 //report controls
 - (void) sendRepport:(Data*) d;
-- (void) clearQueue;
+- (BOOL) sendNextReport;
+- (void) dumpSendQueue;
+- (void) readSendQueue;
 
 //history controlls
 - (void) pushHistory:(Data*) d;
